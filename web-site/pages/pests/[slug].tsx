@@ -1,0 +1,1 @@
+import React from 'react'; const PestDetail = () => <div>Pest Detail Page</div>; export default PestDetail;

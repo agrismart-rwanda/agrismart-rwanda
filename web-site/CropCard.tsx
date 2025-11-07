@@ -1,0 +1,1 @@
+const CropCard = ({ crop }) => <div>{crop.name}</div>; export default CropCard;

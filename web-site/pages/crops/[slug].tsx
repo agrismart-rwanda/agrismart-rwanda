@@ -1,0 +1,1 @@
+import React from 'react'; import CropCard from '../../components/CropCard'; const Pest = () => <div>Pest details here</div>; export default Pest;

@@ -1,0 +1,1 @@
+const SearchBar = () => <input type="text" />; export default SearchBar;

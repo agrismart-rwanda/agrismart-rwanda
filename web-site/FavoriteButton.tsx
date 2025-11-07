@@ -1,0 +1,1 @@
+const FavoriteButton = () => <button>Favorite</button>; export default FavoriteButton;

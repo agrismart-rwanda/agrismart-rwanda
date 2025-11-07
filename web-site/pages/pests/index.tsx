@@ -1,0 +1,1 @@
+import React from 'react'; const PestIndex = () => <div>Pests List</div>; export default PestIndex;

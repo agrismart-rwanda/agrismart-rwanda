@@ -1,0 +1,1 @@
+import React from 'react'; import CropCard from '../components/CropCard'; const Home = () => <div><CropCard crop={{ name: 'Cabbage' }} /></div>; export default Home;
