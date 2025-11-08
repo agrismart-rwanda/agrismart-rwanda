@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AmizeroAI - AgriSmart Assistant</title>
+
+<!-- Bootstrap & Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+body {
+  background: #f1f4f9;
+  font-family: "Poppins", sans-serif;
+}
+.chat-container {
+  max-width: 900px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+}
+.chat-header {
+  background: linear-gradient(135deg, #007bff, #6610f2);
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.chat-header img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #28a745;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+.typing-indicator {
+  display: inline-flex;
+  gap: 3px;
+}
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #666;
+  animation: typing 1.4s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px); }
+}
+.chat-box {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+.chat-message {
+  margin-bottom: 15px;
+  display: flex;
+}
+.chat-message.user { justify-content: flex-end; }
+.chat-message.ai { justify-content: flex-start; }
+.message-bubble {
+  background: #f0f0f0;
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 70%;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+.chat-message.user .message-bubble {
+  background: #007bff;
+  color: white;
+}
+.chat-footer {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+input[type="text"] {
+  flex: 1;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  outline: none;
+}
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  color: #888;
+  margin: 10px;
+  transition: 0.3s;
+}
+.upload-box.dragover {
+  border-color: #007bff;
+  background: #eef6ff;
+  color: #007bff;
+}
+.upload-preview img {
+  max-width: 150px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+.quick-questions {
+  padding: 10px;
+  background: #e9ecef;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+}
+.suggestion-chip {
+  background: #e3f2fd;
+  border: 1px solid #bbdefb;
+  border-radius: 20px;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+.suggestion-chip:hover {
+  background: #bbdefb;
+  transform: translateY(-2px);
+}
+</style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div class="chat-header">
+    <img src="https://images.pexels.com/photos/17485609/pexels-photo-17485609.png" alt="AmizeroAI">
+    <div>
+      AmizeroAI - AgriSmart
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span>Online - Free AI Assistant</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Question Buttons -->
+  <div class="quick-questions">
+    <span class="suggestion-chip" onclick="askQuestion('How to grow beans?')">🌱 Beans</span>
+    <span class="suggestion-chip" onclick="askQuestion('Pest control for maize')">🌽 Maize</span>
+    <span class="suggestion-chip" onclick="askQuestion('Potato farming guide')">🥔 Potatoes</span>
+    <span class="suggestion-chip" onclick="askQuestion('Coffee farming tips')">☕ Coffee</span>
+    <span class="suggestion-chip" onclick="askQuestion('Banana cultivation')">🍌 Bananas</span>
+    <span class="suggestion-chip" onclick="askQuestion('Best fertilizer for soil')">🌾 Soil</span>
+    <span class="suggestion-chip" onclick="askQuestion('Generate image of maize field')">🎨 Generate Image</span>
+    <span class="suggestion-chip" onclick="document.getElementById('fileInput').click()">📸 Upload Image</span>
+  </div>
+
+  <div id="chatBox" class="chat-box"></div>
+
+  <!-- Image Upload Area -->
+  <div class="upload-box" id="uploadBox">
+    <p>📸 Drag & Drop an image here or click to upload</p>
+    <input type="file" id="fileInput" accept="image/*" hidden>
+    <div class="upload-preview" id="uploadPreview"></div>
+  </div>
+
+  <div class="chat-footer">
+    <button class="btn btn-outline-secondary" id="micBtn"><i class="bi bi-mic-fill"></i></button>
+    <input type="text" id="userInput" placeholder="Ask or type to generate image..." />
+    <button class="btn btn-primary" id="sendBtn"><i class="bi bi-send-fill"></i></button>
+    <button class="btn btn-outline-success" id="translateBtn"><i class="bi bi-globe"></i></button>
+  </div>
+</div>
+
+<script>
+const chatBox = document.getElementById("chatBox");
+const userInput = document.getElementById("userInput");
+const micBtn = document.getElementById("micBtn");
+const sendBtn = document.getElementById("sendBtn");
+const uploadBox = document.getElementById("uploadBox");
+const fileInput = document.getElementById("fileInput");
+const uploadPreview = document.getElementById("uploadPreview");
+const translateBtn = document.getElementById("translateBtn");
+
+let currentLang = "en";
+
+// Enhanced farming knowledge base
+const farmingKnowledge = {
+  'bean': `🌱 **COMPLETE BEAN FARMING GUIDE**\n\n• **Season:** Plant in March-May & Sept-Nov\n• **Soil:** Well-drained, pH 6.0-6.5\n• **Spacing:** 50cm rows, 10cm plants\n• **Fertilizer:** NPK 17-17-17 or organic manure\n• **Yield:** 1.5-2 tons/hectare\n• **Pests:** Control bean fly, aphids\n• **Harvest:** 60-90 days when pods yellow`,
+
+  'maize': `🌽 **DETAILED MAIZE GUIDE**\n\n• **Season:** Start of rains (Season A & B)\n• **Spacing:** 75cm rows, 30cm plants\n• **Fertilizer:** DAP at planting, CAN after 3-4 weeks\n• **Pests:** Stalk borers, armyworms\n• **Yield:** 3-5 tons/hectare (improved)\n• **Water:** Critical during flowering\n• **Harvest:** When husks turn yellow`,
+
+  'potato': `🥔 **POTATO FARMING GUIDE**\n\n• **Season:** Cool seasons, highlands\n• **Soil:** Well-drained, rich in organic matter\n• **Seed:** Certified disease-free tubers\n• **Spacing:** 75cm rows, 30cm plants\n• **Fertilizer:** Balanced NPK + organic\n• **Pests:** Potato blight, tuber moths\n• **Harvest:** 90-120 days`,
+
+  'coffee': `☕ **COFFEE FARMING GUIDE**\n\n• **Altitude:** 1200-2000 meters\n• **Soil:** Well-drained acidic soil\n• **Varieties:** Arabica, Bourbon\n• **Spacing:** 2m x 2m for Arabica\n• **Pruning:** Regular for productivity\n• **Pests:** Coffee berry disease\n• **Processing:** Wet or dry method`,
+
+  'banana': `🍌 **BANANA CULTIVATION GUIDE**\n\n• **Climate:** Warm, humid conditions\n• **Soil:** Rich, well-drained loam\n• **Spacing:** 3m x 3m for proper growth\n• **Propagation:** Tissue culture or suckers\n• **Fertilizer:** High potassium requirement\n• **Pests:** Banana weevils, nematodes\n• **Harvest:** 12-18 months after planting`,
+
+  'soil': `🌾 **SOIL MANAGEMENT GUIDE**\n\n• **Testing:** Regular soil analysis\n• **pH:** 6.0-7.0 for most crops\n• **Organic Matter:** Add compost/manure\n• **Fertilizers:** NPK based on crop needs\n• **Conservation:** Mulching, cover crops\n• **Drainage:** Ensure proper water flow\n• **Rotation:** Rotate crops to maintain fertility`,
+
+  'default': `🌍 **Welcome to AmizeroAI!**\n\nI can help with:\n• Crop growing guides 🌱\n• Pest control advice 🐛\n• Soil management 🌾\n• Image analysis of crops 📷\n• Generate farming images 🎨\n\nTry: "maize planting guide" or upload a crop image!`
+};
+
+function addMessage(text, sender, isHTML=false) {
+  const msg = document.createElement("div");
+  msg.className = `chat-message ${sender}`;
+  const bubble = document.createElement("div");
+  bubble.className = "message-bubble";
+  if(isHTML) bubble.innerHTML = text; else bubble.textContent = text;
+  bubble.dataset.original = text;
+  msg.appendChild(bubble);
+  chatBox.appendChild(msg);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function askQuestion(text) {
+  userInput.value = text;
+  sendMessage();
+}
+
+async function sendMessage() {
+  const text = userInput.value.trim();
+  if(!text) return;
+  addMessage(text, "user");
+  userInput.value = "";
+
+  const lowerText = text.toLowerCase();
+  
+  if (lowerText.includes("generate") || lowerText.includes("image") || lowerText.includes("picture")) {
+    generateImage(text);
+  } else if (lowerText.includes("analyze") || lowerText.includes("upload") || lowerText.includes("photo")) {
+    addMessage("📸 Please upload an image using the drag & drop area above!", "ai");
+  } else {
+    generateAIResponse(text);
+  }
+}
+
+// Enhanced AI response
+async function generateAIResponse(message) {
+  // Show typing indicator
+  const typingMsg = document.createElement("div");
+  typingMsg.className = "chat-message ai";
+  typingMsg.innerHTML = `<div class="message-bubble"><div class="typing-indicator">
+    <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+  </div></div>`;
+  chatBox.appendChild(typingMsg);
+  
+  // Simulate AI thinking
+  await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
+  chatBox.removeChild(typingMsg);
+  
+  const msg = message.toLowerCase();
+  let response = farmingKnowledge.default;
+  
+  for (const [keyword, knowledge] of Object.entries(farmingKnowledge)) {
+    if (msg.includes(keyword)) {
+      response = knowledge;
+      break;
+    }
+  }
+  
+  addMessage(response, "ai");
+  speakText(response);
+}
+
+// --- Text to Speech ---
+function speakText(text) {
+  if ('speechSynthesis' in window) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = currentLang === "en" ? "en-US" : "rw-RW";
+    speechSynthesis.speak(utter);
+  }
+}
+
+// --- Voice Input ---
+micBtn.addEventListener("click", () => {
+  if (!('webkitSpeechRecognition' in window)) return alert("Speech recognition not supported!");
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = "en-US";
+  recognition.start();
+  recognition.onresult = e => {
+    userInput.value = e.results[0][0].transcript;
+    sendMessage();
+  };
+});
+
+// --- Image Upload & Analysis ---
+uploadBox.addEventListener("click", () => fileInput.click());
+uploadBox.addEventListener("dragover", e => { e.preventDefault(); uploadBox.classList.add("dragover"); });
+uploadBox.addEventListener("dragleave", e => { e.preventDefault(); uploadBox.classList.remove("dragover"); });
+uploadBox.addEventListener("drop", e => {
+  e.preventDefault();
+  uploadBox.classList.remove("dragover");
+  handleImage(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener("change", e => handleImage(e.target.files[0]));
+
+// Enhanced image analysis
+async function handleImage(file) {
+  if (!file) return;
+  
+  // Show preview
+  uploadPreview.innerHTML = `<img src="${URL.createObjectURL(file)}">`;
+  addMessage("🔍 Analyzing crop image...", "ai");
+  
+  try {
+    const formData = new FormData();
+    formData.append("image", file);
+    
+    const res = await fetch("https://subnp.com/api/free/analyze", { 
+      method: "POST", 
+      body: formData 
+    });
+    
+    const data = await res.json();
+    const analysis = data.message || "Image analysis complete";
+    
+    addMessage(`🧠 **Crop Analysis Results:**\n\n${analysis}\n\n💡 **Recommendations:**\n• Monitor plant health regularly\n• Check for pest signs\n• Ensure proper watering\n• Consider soil testing`, "ai");
+    
+  } catch (error) {
+    addMessage("❌ Analysis service unavailable. Please try again later.", "ai");
+  }
+}
+
+// Enhanced image generation with farming-specific prompts
+async function generateImage(prompt) {
+  addMessage("🎨 Generating farming image...", "ai");
+  
+  try {
+    // Enhance prompt for better farming images
+    const enhancedPrompt = prompt.includes("farm") || prompt.includes("crop") || prompt.includes("field") ? 
+      prompt : `realistic farming scene: ${prompt}, crops, field, agriculture`;
+    
+    const res = await fetch("https://subnp.com/api/free/generate", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ prompt: enhancedPrompt, model: "turbo" })
+    });
+    
+    const data = await res.json();
+    if (data.imageUrl) {
+      addMessage(`<img src="${data.imageUrl}" style="max-width:100%; border-radius:10px; margin:5px 0;"><br>🖼️ Generated farming image for: "${prompt}"`, "ai", true);
+    } else {
+      addMessage("⚠️ Unable to generate image. Please try a different prompt.", "ai");
+    }
+  } catch (error) {
+    addMessage("❌ Image generation service unavailable. Please try again later.", "ai");
+  }
+}
+
+// --- Translation ---
+async function translateText(text, target="rw") {
+  try {
+    const res = await fetch("https://libretranslate.de/translate", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ q: text, source: "en", target: target, format: "text" })
+    });
+    const data = await res.json();
+    return data.translatedText;
+  } catch (error) {
+    return text; // Return original text if translation fails
+  }
+}
+
+translateBtn.addEventListener("click", async () => {
+  currentLang = currentLang === "en" ? "rw" : "en";
+  
+  // Show language switch message
+  addMessage(`🌐 Language switched to ${currentLang === "en" ? "English" : "Kinyarwanda"}`, "ai");
+  
+  // Translate all AI messages
+  const aiBubbles = document.querySelectorAll(".chat-message.ai .message-bubble");
+  for (let bubble of aiBubbles) {
+    const original = bubble.dataset.original;
+    const translated = await translateText(original, currentLang);
+    bubble.innerHTML = translated;
+  }
+});
+
+// Add welcome message
+addMessage("🌱 Welcome to AmizeroAI AgriSmart! I can help with crop advice, image analysis, and generate farming images. Try the quick buttons or ask me anything!", "ai");
+</script>
+</body>
+</html>

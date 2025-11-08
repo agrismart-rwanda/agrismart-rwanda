@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasons Guide - AgriSmart Rwanda</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .language-selector button {
+            background: none;
+            border: 1px solid white;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .language-selector button.active {
+            background: white;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .language-selector button:hover {
+            background: white;
+            color: #27ae60;
+        }
+
+        .login-btn {
+            background: white;
+            color: #27ae60;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Seasons Section */
+        .seasons-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .seasons-section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        .seasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .season-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .season-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .season-header {
+            padding: 1.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .season-dry {
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+        }
+
+        .season-rainy {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .season-short-rain {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .season-long-rain {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+        }
+
+        .season-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .season-content {
+            padding: 1.5rem;
+        }
+
+        .season-content h4 {
+            color: #27ae60;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .season-crops {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .crop-tag {
+            background: #e8f5e9;
+            color: #27ae60;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Planting Calendar */
+        .calendar-section {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+
+        .calendar-section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .month-card {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .month-card h3 {
+            color: #27ae60;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
+        .tips-section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tip-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .tip-card h3 {
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #27ae60;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header {
+                padding: 3rem 1rem;
+            }
+        }
+
+        /* Language Content */
+        .language-content {
+            display: none;
+        }
+
+        .language-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo"><a href="index.html">AgriSmart Rwanda</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="pests.html">Pests</a></li>
+                <li><a href="seasons.html" style="font-weight: bold; text-decoration: underline;">Seasons</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="rw">RW</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+            </div>
+            <button class="login-btn">Login</button>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="language-content active" data-lang="en">
+            <h1>Rwanda Seasons Guide</h1>
+            <p>Plan your farming activities with our comprehensive seasonal guide tailored for Rwanda's climate</p>
+        </div>
+        <div class="language-content" data-lang="rw">
+            <h1>Ibyiciro by'Igihe mu Rwanda</h1>
+            <p>Tegeka ibikorwa byawe by'ubuhinzi ukoresheje umuyoboro w'igihe uteguye neza kugenamiterere y'ibihe by'u Rwanda</p>
+        </div>
+        <div class="language-content" data-lang="fr">
+            <h1>Guide des Saisons du Rwanda</h1>
+            <p>Planifiez vos activités agricoles avec notre guide saisonnier complet adapté au climat du Rwanda</p>
+        </div>
+    </section>
+
+    <!-- Seasons Section -->
+    <section class="seasons-section">
+        <div class="language-content active" data-lang="en">
+            <h2>Rwanda's Four Main Seasons</h2>
+        </div>
+        <div class="language-content" data-lang="rw">
+            <h2>Ibyiciro Bine By'ingenzi By'U Rwanda</h2>
+        </div>
+        <div class="language-content" data-lang="fr">
+            <h2>Les Quatre Saisons Principales du Rwanda</h2>
+        </div>
+
+        <div class="seasons-grid">
+            <!-- Dry Season -->
+            <div class="season-card">
+                <div class="season-header season-dry">
+                    <div class="language-content active" data-lang="en">
+                        <h3>Dry Season</h3>
+                        <p>June - September</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Igihe cy'Umuhindo</h3>
+                        <p>Werurwe - Nzeri</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Saison Sèche</h3>
+                        <p>Juin - Septembre</p>
+                    </div>
+                </div>
+                <div class="season-content">
+                    <div class="language-content active" data-lang="en">
+                        <h4>Characteristics</h4>
+                        <p>Minimal rainfall, sunny days, lower humidity. Ideal for irrigation-dependent crops and land preparation.</p>
+                        
+                        <h4>Recommended Crops</h4>
+                        <div class="season-crops">
+                            <span class="crop-tag">Maize</span>
+                            <span class="crop-tag">Beans</span>
+                            <span class="crop-tag">Cassava</span>
+                            <span class="crop-tag">Sweet Potatoes</span>
+                        </div>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h4>Ibimenyetso</h4>
+                        <p>Imvura nkeya, amasaha y'izuba, ubushyuhe bugabanutse. Birambuye kubihingwa bifite amasoko no gutegura ubutaka.</p>
+                        
+                        <h4>Ibihingwa Bishyizweho</h4>
+                        <div class="season-crops">
+                            <span class="crop-tag">Ibigori</span>
+                            <span class="crop-tag">Ibishyimbo</span>
+                            <span class="crop-tag">Imyumbati</span>
+                            <span class="crop-tag">Ibirayi</span>
+                        </div>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h4>Caractéristiques</h4>
+                        <p>Précipitations minimales, journées ensoleillées, faible humidité. Idéal pour les cultures dépendant de l'irrigation et la préparation des terres.</p>
+                        
+                        <h4>Cultures Recommandées</h4>
+                        <div class="season-crops">
+                            <span class="crop-tag">Maïs</span>
+                            <span class="crop-tag">Haricots</span>
+                            <span class="crop-tag">Manioc</span>
+                            <span class="crop-tag">Patates Douces</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Short Rainy Season -->
+            <div class="season-card">
+                <div class="season-header season-short-rain">
+                    <div class="language-content active" data-lang="en">
+                        <h3>Short Rainy Season</h3>
+                        <p>October - November</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Igihe cy'Imvura Ntoya</h3>
+                        <p>Ukwezi k'Ukwakira - Ugushyingo</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Petite Saison des Pluies</h3>
+                        <p>Octobre - Novembre</p>
+                    </div>
+                </div>
+                <div class="season-content">
+                    <div class="language-content active" data-lang="en">
+                        <h4>Characteristics</h4>
+                        <p>Moderate rainfall, good for planting short-cycle crops. Soil moisture is optimal for germination.</p>
+                        
+                        <h4>Recommended Crops</h4>
+                        <div class="season-crops">
+                            <span class="crop-tag">Irish Potatoes</span>
+                            <span class="crop-tag">Wheat</span>
+                            <span class="crop-tag">Vegetables</span>
+                            <span class="crop-tag">Beans</span>
+                        </div>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h4>Ibimenyetso</h4>
+                        <p>Imvura y'imiterere, irambuye kubihingwa by'igihe gito. Ubwondo bw'ubutaka burambuye kubihingwa.</p>
+                        
+                        <h4>Ibihingwa Bishyizweho</h4>
+                        <div class="season-crops">
+                            <span class="crop-tag">Ibirayi</span>
+                            <span class="crop-tag">Ingano</span>
+                            <span class="crop-tag">Imboga</span>
+                            <span class="crop-tag">Ibishyimbo</span>
+                        </div>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h4>Caractéristiques</h4>
+                        <p>Précipitations modérées, bonnes pour la plantation de cultures à cycle court. L'humidité du sol est optimale pour la germination.</p>
+                        
+                        <h4>Cultures Recommandées</h4>
+                        <div class="season-crops">
+                            <span class="crop-tag">Pommes de Terre</span>
+                            <span class="crop-tag">Blé</span>
+                            <span class="crop-tag">Légumes</span>
+                            <span class="crop-tag">Haricots</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Long Rainy Season -->
+            <div class="season-card">
+                <div class="season-header season-long-rain">
+                    <div class="language-content active" data-lang="en">
+                        <h3>Long Rainy Season</h3>
+                        <p>March - May</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Igihe cy'Imvura Nini</h3>
+                        <p>Werurwe - Gicurasi</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Grande Saison des Pluies</h3>
+                        <p>Mars - Mai</p>
+                    </div>
+                </div>
+                <div class="season-content">
+                    <div class="language-content active" data-lang="en">
+                        <h4>Characteristics</h4>
+                        <p>Heavy rainfall, high humidity. Main planting season for most crops. Watch for waterlogging and erosion.</p>
+                        
+                        <h4>Recommended Crops</h4>
+                        <div class="season-crops">
+                            <span class="crop-tag">Maize</span>
+                            <span class="crop-tag">Beans</span>
+                            <span class="crop-tag">Sorghum</span>
+                            <span class="crop-tag">Rice</span>
+                        </div>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h4>Ibimenyetso</h4>
+                        <p>Imvura nyinshi, ubushyuhe bukabije. Igihe cy'ingenzi cyo guhinga ibihingwa byinshi. Raba neza ubutaka n'imyuzure.</p>
+                        
+                        <h4>Ibihingwa Bishyizweho</h4>
+                        <div class="season-crops">
+                            <span class="crop-tag">Ibigori</span>
+                            <span class="crop-tag">Ibishyimbo</span>
+                            <span class="crop-tag">Amasaka</span>
+                            <span class="crop-tag">Umuceri</span>
+                        </div>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h4>Caractéristiques</h4>
+                        <p>Fortes précipitations, humidité élevée. Principale saison de plantation pour la plupart des cultures. Attention à l'engorgement et à l'érosion.</p>
+                        
+                        <h4>Cultures Recommandées</h4>
+                        <div class="season-crops">
+                            <span class="crop-tag">Maïs</span>
+                            <span class="crop-tag">Haricots</span>
+                            <span class="crop-tag">Sorgho</span>
+                            <span class="crop-tag">Riz</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Planting Calendar -->
+        <div class="calendar-section">
+            <div class="language-content active" data-lang="en">
+                <h2>Annual Planting Calendar</h2>
+            </div>
+            <div class="language-content" data-lang="rw">
+                <h2>Kalendari y'Imyaka yo Guhinga</h2>
+            </div>
+            <div class="language-content" data-lang="fr">
+                <h2>Calendrier Annuel de Plantation</h2>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="month-card">
+                    <div class="language-content active" data-lang="en">
+                        <h3>January</h3>
+                        <p>Prepare land for long rainy season. Plant vegetables and short-cycle crops.</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Mutarama</h3>
+                        <p>Tegura ubutaka kugihe cy'imvura nini. Hinga imboga n'ibihingwa by'igihe gito.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Janvier</h3>
+                        <p>Préparez les terres pour la grande saison des pluies. Plantez des légumes et des cultures à cycle court.</p>
+                    </div>
+                </div>
+                <div class="month-card">
+                    <div class="language-content active" data-lang="en">
+                        <h3>February</h3>
+                        <p>Continue land preparation. Start planting early maize and beans.</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Gashyantare</h3>
+                        <p>Komeza gutegura ubutaka. Tangira guhinga ibigori n'ibishyimbo vuba.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Février</h3>
+                        <p>Continuez la préparation des terres. Commencez à planter du maïs et des haricots précoces.</p>
+                    </div>
+                </div>
+                <div class="month-card">
+                    <div class="language-content active" data-lang="en">
+                        <h3>March</h3>
+                        <p>Main planting season begins. Plant maize, beans, sorghum.</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Werurwe</h3>
+                        <p>Igihe cy'ingenzi cyo guhinga gitangira. Hinga ibigori, ibishyimbo, amasaka.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Mars</h3>
+                        <p>La principale saison de plantation commence. Plantez du maïs, des haricots, du sorgho.</p>
+                    </div>
+                </div>
+                <div class="month-card">
+                    <div class="language-content active" data-lang="en">
+                        <h3>April</h3>
+                        <p>Continue planting. Weed management and pest control important.</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Mata</h3>
+                        <p>Komeza guhinga. Gucunga ibyatsi n'ubwoko bw'ibyorezo by'ingenzi.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Avril</h3>
+                        <p>Continuez la plantation. La gestion des mauvaises herbes et la lutte antiparasitaire sont importantes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Farming Tips -->
+        <div class="tips-section">
+            <div class="language-content active" data-lang="en">
+                <h2>Seasonal Farming Tips</h2>
+            </div>
+            <div class="language-content" data-lang="rw">
+                <h2>Inama zo mu Bworozi ku gihe</h2>
+            </div>
+            <div class="language-content" data-lang="fr">
+                <h2>Conseils Agricoles Saisonniers</h2>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="language-content active" data-lang="en">
+                        <h3>Soil Preparation</h3>
+                        <p>Prepare your land during the dry season to take advantage of the first rains. Use organic manure to improve soil fertility.</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Gutegura Ubutaka</h3>
+                        <p>Tegura ubutaka bwawe mu gihe cy'umuhindo kugirango ukoreshe imvura ya mbere. Koresha ifumbire y'ibinyabuzima kugirango wongere ubworozi bw'ubutaka.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Préparation du Sol</h3>
+                        <p>Préparez vos terres pendant la saison sèche pour profiter des premières pluies. Utilisez du fumier organique pour améliorer la fertilité du sol.</p>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="language-content active" data-lang="en">
+                        <h3>Crop Rotation</h3>
+                        <p>Practice crop rotation between seasons to maintain soil health and reduce pest buildup.</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Guhindura Ibihingwa</h3>
+                        <p>Kora guhindura ibihingwa hagati y'ibihe kugirango ukomeze ubuzima bw'ubutaka no kugabanya ibyorezo.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Rotation des Cultures</h3>
+                        <p>Pratiquez la rotation des cultures entre les saisons pour maintenir la santé du sol et réduire l'accumulation de ravageurs.</p>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="language-content active" data-lang="en">
+                        <h3>Water Management</h3>
+                        <p>During rainy seasons, ensure proper drainage to prevent waterlogging. In dry seasons, use irrigation wisely.</p>
+                    </div>
+                    <div class="language-content" data-lang="rw">
+                        <h3>Gucunga Amazi</h3>
+                        <p>Mu bihe by'imvura, menya neza ko ubutaka bufite amasoko kugirango bidakuremo amazi menshi. Mu bihe by'umuhindo, koresha amasoko mu buryo bwiza.</p>
+                    </div>
+                    <div class="language-content" data-lang="fr">
+                        <h3>Gestion de l'Eau</h3>
+                        <p>Pendant les saisons des pluies, assurez un bon drainage pour éviter l'engorgement. Pendant les saisons sèches, utilisez l'irrigation judicieusement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">AgriSmart Rwanda</div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="crops.html">Crops</a>
+                <a href="pests.html">Pests</a>
+                <a href="seasons.html">Seasons</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p>&copy; 2024 AgriSmart Rwanda. All rights reserved.</p>
+            <p>Smart Farming for Rwanda's Future</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language switching functionality
+        document.querySelectorAll('.lang-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                
+                // Update active button
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show content for selected language
+                document.querySelectorAll('.language-content').forEach(content => {
+                    content.classList.remove('active');
+                    if (content.getAttribute('data-lang') === lang) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Login button functionality
+        document.querySelector('.login-btn').addEventListener('click', function() {
+            alert('Login feature would open here');
+            // Here you would typically open a login modal or redirect to login page
+        });
+    </script>
+</body>
+</html>
