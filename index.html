@@ -1,303 +1,137 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriSmart Rwanda - Smart Farming for Rwanda's Future</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #2c3e50; background-color: #f8f9fa; }
-        header { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .navbar { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .logo { font-size: 1.8rem; font-weight: bold; }
-        .nav-links { display: flex; list-style: none; gap: 2rem; }
-        .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
-        .nav-links a:hover { opacity: 0.8; }
-        .language-selector { display: flex; gap: 1rem; }
-        .language-selector button { background: none; border: 1px solid white; color: white; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; transition: all 0.3s; }
-        .language-selector button:hover { background: white; color: #27ae60; }
-        .login-btn { background: white; color: #27ae60; border: none; padding: 0.5rem 1.5rem; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
-        .login-btn:hover { background: #f8f9fa; transform: translateY(-2px); }
-        .hero { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80'); background-size: cover; background-position: center; color: white; text-align: center; padding: 8rem 2rem; }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
-        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        .cta-btn { background: #27ae60; color: white; border: none; padding: 1rem 2rem; border-radius: 5px; cursor: pointer; font-size: 1.1rem; transition: all 0.3s; text-decoration: none; display: inline-block; }
-        .cta-btn:hover { background: #219a52; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
-        h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #2c3e50; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .feature-card { background: white; padding: 2rem; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
-        .feature-card:hover { transform: translateY(-5px); }
-        .feature-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #27ae60; }
-        .feature-card p { color: #666; }
-        .why-choose { background: linear-gradient(135deg, #34495e, #2c3e50); color: white; }
-        .why-choose-content { text-align: center; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
-        .stat-item { background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 10px; backdrop-filter: blur(10px); }
-        .stat-item h3 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #27ae60; }
-        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .benefit-item { background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 10px; text-align: left; backdrop-filter: blur(10px); }
-        .benefit-item h4 { font-size: 1.3rem; margin-bottom: 1rem; color: #27ae60; }
-        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; }
-        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 1rem; } .nav-links { flex-direction: column; text-align: center; gap: 1rem; } .hero h1 { font-size: 2rem; } .hero { padding: 4rem 1rem; } .cta-buttons { flex-direction: column; align-items: center; } .cta-btn { width: 100%; max-width: 300px; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriSmart Rwanda</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
+    body {background:#f8f9fa; color:#2c3e50; line-height:1.6;}
+    header {background:linear-gradient(135deg, #27ae60, #2ecc71); color:white; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center;}
+    header nav a {color:white; text-decoration:none; margin:0 1rem; font-weight:bold;}
+    header .lang-btn {background:none; border:1px solid white; color:white; padding:0.3rem 0.8rem; border-radius:5px; cursor:pointer; margin-left:0.5rem;}
+    header .lang-btn.active {background:white; color:#27ae60;}
+    header .social-icons i {margin-left:0.5rem; font-size:1rem;}
+    header .login-btn {background:white; color:#27ae60; border:none; padding:0.5rem 1.2rem; border-radius:5px; cursor:pointer; font-weight:bold; margin-left:1rem;}
+    .hero {background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1593541164459-72b892546e2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80'); background-size:cover; background-position:center; color:white; text-align:center; padding:6rem 2rem;}
+    .hero h1 {font-size:2.5rem; margin-bottom:1rem;}
+    .hero p {font-size:1.2rem; max-width:700px; margin:0 auto;}
+    section {padding:4rem 2rem; max-width:1200px; margin:0 auto;}
+    .section-title {text-align:center; font-size:2rem; color:#27ae60; margin-bottom:2rem;}
+    .grid {display:grid; gap:2rem; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+    .card {background:white; padding:1.5rem; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); transition:transform 0.3s;}
+    .card:hover {transform:translateY(-5px);}
+    footer {background:#2c3e50; color:white; text-align:center; padding:2rem;}
+    footer a {color:white; text-decoration:none; margin:0 0.5rem;}
+    footer a:hover {color:#27ae60;}
+</style>
 </head>
 <body>
 
 <header>
-    <nav class="navbar">
-        <div class="logo">AgriSmart Rwanda</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#crops">Crops</a></li>
-            <li><a href="#pests">Pests</a></li>
-            <li><a href="#seasons">Seasons</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="language-selector">
-            <button>EN</button>
-            <button>RW</button>
-            <button>FR</button>
+    <div>
+        <a href="index.html" style="font-weight:bold; font-size:1.5rem;">AgriSmart Rwanda</a>
+        <nav style="display:inline-block;">
+            <a href="index.html">Home</a>
+            <a href="crops.html">Crops</a>
+            <a href="seasons.html">Seasons</a>
+        </nav>
+    </div>
+    <div>
+        <div class="social-icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-whatsapp"></i>
         </div>
         <button class="login-btn">Login</button>
-    </nav>
+        <button class="lang-btn active" data-lang="en">EN 🇬🇧</button>
+        <button class="lang-btn" data-lang="rw">RW 🇷🇼</button>
+        <button class="lang-btn" data-lang="fr">FR 🇫🇷</button>
+    </div>
 </header>
 
-<section class="hero" id="home">
-    <h1>Smart Farming for Rwanda's Future</h1>
-    <p>AI-powered crop management, seasonal guidance, and pest control solutions</p>
-    <div class="cta-buttons">
-        <a href="#crops" class="cta-btn">Explore Crops</a>
-        <a href="#seasons" class="cta-btn">Seasons Guide</a>
-        <a href="#pests" class="cta-btn">Pest Control</a>
-    </div>
+<section class="hero">
+    <h1 data-key="welcomeTitle"></h1>
+    <p data-key="welcomeText"></p>
 </section>
 
-<section class="features">
-    <h2>Our Smart Farming Solutions</h2>
-    <div class="features-grid">
-        <div class="feature-card"><h3>Crop Management</h3><p>AI-powered insights for optimal crop growth and yield maximization</p></div>
-        <div class="feature-card"><h3>Seasonal Planning</h3><p>Smart recommendations for planting and harvesting based on seasons</p></div>
-        <div class="feature-card"><h3>Pest Control</h3><p>Early detection and effective solutions for pest management</p></div>
-        <div class="feature-card"><h3>Weather Integration</h3><p>Real-time weather data for better farming decisions</p></div>
-    </div>
-</section>
-
-<section id="crops">
-    <h2>Popular Crops in Rwanda</h2>
-    <div class="features-grid" id="crops-grid"></div>
-</section>
-
-<section id="pests">
-    <h2>Common Crop Pests</h2>
-    <div class="features-grid" id="pests-grid"></div>
-</section>
-
-<section id="seasons">
-    <h2>Seasonal Planting Guide</h2>
-    <div class="features-grid" id="seasons-grid"></div>
-</section>
-
-<section class="why-choose">
-    <div class="why-choose-content">
-        <h2>Why Choose AgriSmart?</h2>
-        <div class="stats-grid">
-            <div class="stat-item"><h3>100+</h3><p>Crops in our database</p></div>
-            <div class="stat-item"><h3>100%</h3><p>Rwanda-focused solutions</p></div>
-            <div class="stat-item"><h3>24/7</h3><p>Expert support available</p></div>
+<section>
+    <h2 class="section-title" data-key="visionMissionTitle"></h2>
+    <div class="grid">
+        <div class="card">
+            <h3 data-key="visionTitle"></h3>
+            <p data-key="visionText"></p>
         </div>
-        <div class="benefits-grid">
-            <div class="benefit-item"><h4>Pest Management</h4><p>Identify and control pests effectively with AI-powered detection and proven solutions tailored for Rwandan agriculture.</p></div>
-            <div class="benefit-item"><h4>Seasonal Guide</h4><p>Know exactly what to plant in each season with our comprehensive planting calendar and crop rotation recommendations.</p></div>
-            <div class="benefit-item"><h4>Multi-Language</h4><p>Available in English, Kinyarwanda & French to ensure every farmer in Rwanda can access our smart farming solutions.</p></div>
+        <div class="card">
+            <h3 data-key="missionTitle"></h3>
+            <p data-key="missionText"></p>
         </div>
     </div>
 </section>
 
-<section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: agrismart316@gmail.com</p>
-    <p>Phone: 0792584184</p>
-    <p>Address: Kigali, Rwanda</p>
+<section>
+    <h2 class="section-title" data-key="whyChooseTitle"></h2>
+    <div class="grid">
+        <div class="card">
+            <p data-key="whyChoose1"></p>
+        </div>
+        <div class="card">
+            <p data-key="whyChoose2"></p>
+        </div>
+        <div class="card">
+            <p data-key="whyChoose3"></p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title" data-key="productsServicesTitle"></h2>
+    <div class="grid">
+        <div class="card">
+            <p data-key="productService1"></p>
+        </div>
+        <div class="card">
+            <p data-key="productService2"></p>
+        </div>
+        <div class="card">
+            <p data-key="productService3"></p>
+        </div>
+    </div>
 </section>
 
 <footer>
+    <p>📞 0792584184 | 📧 agrismart316@gmail.com | 📅 2025</p>
+    <p>
+        🌐 <a href="#">Facebook: Amizero Ally Allan</a> | 
+        🌐 <a href="#">Instagram: amzero100</a> | 
+        🌐 <a href="#">WhatsApp: +250792584184</a>
+    </p>
     <p>&copy; 2025 AgriSmart Rwanda. All rights reserved.</p>
-    <p>Smart Farming for Rwanda's Future</p>
 </footer>
 
+<script src="translations.js"></script>
 <script>
-// Language selector
-document.querySelectorAll('.language-selector button').forEach(button => {
-    button.addEventListener('click', function() { alert(`Language changed to ${this.textContent}`); });
-});
-document.querySelector('.login-btn').addEventListener('click', function() { alert('Login feature would open here'); });
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    function setLanguage(lang){
+        document.querySelectorAll('[data-key]').forEach(el=>{
+            const key = el.getAttribute('data-key');
+            if(translations[key] && translations[key][lang]){
+                el.innerText = translations[key][lang];
+            }
+        });
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+            const lang = btn.getAttribute('data-lang');
+            document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+            setLanguage(lang);
+        });
     });
-});
 
-// 100 Crops
-const crops = [
-{"name":"Maize","desc":"Staple crop grown across Rwanda."},
-{"name":"Irish Potato","desc":"Thrives in cooler regions with high yield potential."},
-{"name":"Beans","desc":"Important protein source, grows in multiple regions."},
-{"name":"Cassava","desc":"Drought-resistant root crop."},
-{"name":"Banana","desc":"Essential fruit crop in Rwanda."},
-{"name":"Wheat","desc":"Grown in higher altitudes with cool climate."},
-{"name":"Rice","desc":"Mainly grown in marshlands and irrigated fields."},
-{"name":"Sweet Potato","desc":"Root crop rich in vitamins."},
-{"name":"Tomato","desc":"Important vegetable requiring warm climate."},
-{"name":"Onion","desc":"Grown for culinary and commercial purposes."},
-{"name":"Cabbage","desc":"Leafy vegetable widely cultivated."},
-{"name":"Carrot","desc":"Root vegetable rich in vitamins."},
-{"name":"Spinach","desc":"Leafy green, grows fast."},
-{"name":"Irish Yam","desc":"Root tuber popular in Rwanda."},
-{"name":"Passion Fruit","desc":"Tropical fruit grown in highlands."},
-{"name":"Avocado","desc":"High-value fruit crop."},
-{"name":"Mango","desc":"Popular fruit tree for local consumption."},
-{"name":"Pineapple","desc":"Tropical fruit, grows in warm areas."},
-{"name":"Peas","desc":"Legume with high protein content."},
-{"name":"Sunflower","desc":"Oilseed crop, grows well in dry areas."},
-{"name":"Soybean","desc":"Protein-rich legume."},
-{"name":"Pumpkin","desc":"Used as food and livestock feed."},
-{"name":"Watermelon","desc":"Fruit crop requiring warm climate."},
-{"name":"Cucumber","desc":"Vegetable grown for fresh consumption."},
-{"name":"Lettuce","desc":"Leafy green for salads."},
-{"name":"Strawberry","desc":"Small fruit grown in highlands."},
-{"name":"Apple","desc":"Grows in cooler high altitude zones."},
-{"name":"Pear","desc":"Temperate fruit tree."},
-{"name":"Grapes","desc":"Vine crop, mainly in small-scale horticulture."},
-{"name":"Chili","desc":"Spicy vegetable crop."},
-{"name":"Bell Pepper","desc":"Sweet pepper grown widely."},
-{"name":"Coriander","desc":"Herb used in cooking."},
-{"name":"Garlic","desc":"Bulb crop used for flavoring."},
-{"name":"Ginger","desc":"Spicy root crop."},
-{"name":"Turmeric","desc":"Medicinal and culinary root."},
-{"name":"Papaya","desc":"Tropical fruit with fast growth."},
-{"name":"Eggplant","desc":"Vegetable, requires warm climate."},
-{"name":"Okra","desc":"Green vegetable for soups."},
-{"name":"Coffee","desc":"Major cash crop for Rwanda."},
-{"name":"Tea","desc":"Main export crop."},
-{"name":"Vanilla","desc":"High-value spice crop."},
-{"name":"Sugarcane","desc":"Grown for sugar production."},
-{"name":"Cocoa","desc":"Export-oriented cash crop."},
-{"name":"Oil Palm","desc":"Grown for oil extraction."},
-{"name":"Taro","desc":"Root crop grown in wet areas."},
-{"name":"Yam Bean","desc":"Legume root crop."},
-{"name":"Okra","desc":"Vegetable used in local dishes."},
-{"name":"Bitter Gourd","desc":"Vegetable with medicinal uses."},
-{"name":"Peppermint","desc":"Herb cultivated for oils."},
-{"name":"Basil","desc":"Culinary herb."},
-{"name":"Thyme","desc":"Herb for flavoring."},
-{"name":"Rosemary","desc":"Drought-tolerant herb."},
-{"name":"Sage","desc":"Medicinal and culinary herb."},
-{"name":"Marjoram","desc":"Aromatic herb."},
-{"name":"Fennel","desc":"Vegetable and spice crop."},
-{"name":"Leek","desc":"Vegetable related to onion."},
-{"name":"Chive","desc":"Culinary herb."},
-{"name":"Rutabaga","desc":"Root vegetable."},
-{"name":"Turnip","desc":"Grown for roots and leaves."},
-{"name":"Kale","desc":"Leafy vegetable, very nutritious."},
-{"name":"Swiss Chard","desc":"Leafy green for salads."},
-{"name":"Mustard Greens","desc":"Leafy vegetable."},
-{"name":"Collard Greens","desc":"Leafy vegetable for cooking."},
-{"name":"Okra","desc":"Green vegetable for stews."},
-{"name":"Amaranth","desc":"Leafy vegetable rich in minerals."},
-{"name":"Cantaloupe","desc":"Fruit crop for warm regions."},
-{"name":"Honeydew","desc":"Fruit grown in warmer areas."},
-{"name":"Quinoa","desc":"High-protein grain crop."},
-{"name":"Millet","desc":"Drought-tolerant cereal."},
-{"name":"Sorghum","desc":"Grain crop for dry regions."},
-{"name":"Barley","desc":"Grown in higher altitudes."},
-{"name":"Oats","desc":"Cool-climate cereal crop."},
-{"name":"Rye","desc":"Grown in cold regions."},
-{"name":"Buckwheat","desc":"Short-season cereal crop."},
-{"name":"Amaranth Grain","desc":"Pseudo-cereal for nutrition."},
-{"name":"Teff","desc":"Grain crop for arid areas."},
-{"name":"Chickpea","desc":"Protein-rich legume."},
-{"name":"Lentil","desc":"Legume grown in cooler areas."},
-{"name":"Mung Bean","desc":"Quick growing legume."},
-{"name":"Cowpea","desc":"Drought-tolerant legume."},
-{"name":"Pigeon Pea","desc":"Long-duration legume."},
-{"name":"Groundnut","desc":"Oilseed and protein crop."},
-{"name":"Sunflower","desc":"Oilseed for dry lands."},
-{"name":"Sesame","desc":"Oilseed for semi-arid regions."},
-{"name":"Flax","desc":"Grown for seeds and oil."},
-{"name":"Canola","desc":"Oilseed crop."},
-{"name":"Safflower","desc":"Grown for oil extraction."},
-{"name":"Hemp","desc":"Fiber and oilseed crop."}
-];
-
-// 40 Pests
-const pests = [
-{"name":"Fall Armyworm","desc":"Infests maize; control with integrated pest management."},
-{"name":"Colorado Potato Beetle","desc":"Affects potatoes; monitor and use insecticides."},
-{"name":"Aphids","desc":"Sap-sucking insects that damage beans and vegetables; use neem oil."},
-{"name":"Banana Weevil","desc":"Damages banana plants; remove infected plants and apply biocontrols."},
-{"name":"Whitefly","desc":"Affects vegetables; use yellow traps and natural predators."},
-{"name":"Cutworm","desc":"Feeds on seedlings; use barriers and insecticides."},
-{"name":"Root-knot Nematodes","desc":"Affects root crops; practice crop rotation."},
-{"name":"Leaf Miner","desc":"Affects vegetables; remove affected leaves."},
-{"name":"Red Spider Mite","desc":"Infests beans and tomatoes; use water sprays or miticides."},
-{"name":"Fruit Fly","desc":"Damages fruits; use traps and sanitation."},
-{"name":"Mealybug","desc":"Infests vegetables and fruits; use natural predators or insecticides."},
-{"name":"Thrips","desc":"Affects flowers and leaves; apply neem oil or predatory insects."},
-{"name":"Cutworm","desc":"Attacks young plants; use soil management and insecticides."},
-{"name":"Armyworm","desc":"Feeds on maize and grasses; implement early monitoring."},
-{"name":"Locusts","desc":"Eat crops in large swarms; monitor and apply pesticides."},
-{"name":"Stem Borer","desc":"Damages maize stems; use resistant varieties and pesticides."},
-{"name":"Leafhopper","desc":"Transmits plant viruses; use resistant varieties."},
-{"name":"Scale Insects","desc":"Infests fruits; use horticultural oils."},
-{"name":"Slugs and Snails","desc":"Damage seedlings; use traps and barriers."},
-{"name":"Cutting Weevil","desc":"Attacks root crops; use cultural control."},
-{"name":"Cabbage Worm","desc":"Eats cabbage leaves; apply biological controls."},
-{"name":"Diamondback Moth","desc":"Attacks brassicas; use natural predators."},
-{"name":"Red Palm Weevil","desc":"Damages palms; remove infected trees."},
-{"name":"Banana Aphid","desc":"Vectors banana viruses; control aphids using biocontrol."},
-{"name":"Leaf Spot Fungus","desc":"Causes leaf damage; apply fungicides."},
-{"name":"Powdery Mildew","desc":"Fungal disease on vegetables; use resistant varieties."},
-{"name":"Rust","desc":"Affects cereals; practice crop rotation."},
-{"name":"Blight","desc":"Affects potatoes and tomatoes; use fungicides."},
-{"name":"Mosaic Virus","desc":"Transmitted by insects; remove infected plants."},
-{"name":"Root Rot","desc":"Fungal disease; improve drainage."},
-{"name":"Wilt","desc":"Bacterial/fungal; remove affected plants."},
-{"name":"Downy Mildew","desc":"Affects vegetables; use fungicides."},
-{"name":"Botrytis","desc":"Gray mold on fruits; apply protective sprays."},
-{"name":"Black Sigatoka","desc":"Fungal disease of banana; apply fungicides."},
-{"name":"Cercospora Leaf Spot","desc":"Fungal disease; remove affected leaves."},
-{"name":"Late Blight","desc":"Affects potatoes/tomatoes; use fungicides."},
-{"name":"Early Blight","desc":"Fungal disease on tomatoes; apply fungicides."},
-{"name":"Smut","desc":"Fungal disease of cereals; remove infected plants."}
-];
-
-// Seasons
-const seasons = [
-{"name":"Long Rains (Feb-May)","desc":"Plant maize, beans, Irish potatoes, rice, vegetables."},
-{"name":"Short Rains (Sep-Dec)","desc":"Plant quick-growing vegetables, beans, maize."},
-{"name":"Dry Season (Jun-Aug)","desc":"Focus on irrigation crops, maintenance, and soil preparation."}
-];
-
-function populateGrid(gridId, items) {
-    const grid = document.getElementById(gridId);
-    items.forEach(item => {
-        const card = document.createElement('div');
-        card.classList.add('feature-card');
-        card.innerHTML = `<h3>${item.name}</h3><p>${item.desc}</p>`;
-        grid.appendChild(card);
-    });
-}
-
-populateGrid('crops-grid', crops);
-populateGrid('pests-grid', pests);
-populateGrid('seasons-grid', seasons);
+    setLanguage('en'); // default
 </script>
 
 </body>
 </html>
-
