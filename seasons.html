@@ -1,104 +1,378 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgriSmart Rwanda – Planting & Harvest Seasons</title>
-  <meta name="description" content="AgriSmart Rwanda provides a detailed guide on planting and harvesting seasons for crops in Rwanda.">
-  <meta name="keywords" content="AgriSmart Rwanda, Rwanda crops, planting seasons, harvest seasons, agriculture">
-  <meta name="author" content="AgriSmart Rwanda">
-  <link rel="stylesheet" href="styles.css"> <!-- Optional external CSS -->
-</head>
-<body>
-
-<!-- Header -->
-<header>
-  <nav class="navbar">
-      <div class="logo" data-key="logo_name">AgriSmart Rwanda</div>
-      <ul class="nav-links">
-          <li><a href="index.html#home" data-key="nav_home">Home</a></li>
-          <li><a href="crops.html" data-key="nav_crops">Crops</a></li>
-          <li><a href="seasons.html" data-key="nav_seasons">Seasons</a></li>
-          <li><a href="#pests" data-key="nav_pests">Pests</a></li>
-          <li><a href="#contact" data-key="nav_contact">Contact</a></li>
-      </ul>
-      <div class="language-selector">
-          <button onclick="setLanguage('en')">EN</button>
-          <button onclick="setLanguage('rw')">RW</button>
-          <button onclick="setLanguage('fr')">FR</button>
-      </div>
-      <button class="login-btn" data-key="login_btn">Login</button>
-  </nav>
-</header>
-
-<div class="container">
-  <h1 data-key="page_title">Planting & Harvest Seasons – Rwanda</h1>
-  <table class="seasons-table">
-    <thead>
-      <tr>
-        <th data-key="crop">Crop</th>
-        <th data-key="planting">Planting Season</th>
-        <th data-key="harvest">Harvest Season</th>
-      </tr>
-    </thead>
-    <tbody id="seasonsGrid"></tbody>
-  </table>
-</div>
-
-<script src="translations.js"></script>
-<script>
+// seasons.js
 const seasons = [
-  { crop: "Maize", planting: "March-May, Sept-Nov", harvest: "June-Aug, Dec-Jan" },
-  { crop: "Irish Potato", planting: "Jan-Feb, Aug-Sep", harvest: "Apr-May, Nov-Dec" },
-  { crop: "Beans", planting: "Feb-Mar, Sep-Oct", harvest: "May-Jun, Dec-Jan" },
-  { crop: "Cassava", planting: "All year round", harvest: "10-12 months after planting" },
-  { crop: "Banana (Cooking)", planting: "All year round", harvest: "12-18 months after planting" },
-  { crop: "Banana (Dessert)", planting: "All year round", harvest: "10-12 months after planting" }
-  // Add remaining crops similarly...
+  {
+    name: "Maize",
+    en: { planting: "March–May, Sep–Nov", harvest: "July–August, Dec–Jan" },
+    rw: { planting: "Werurwe–Gicurasi, Nzeri–Ugushyingo", harvest: "Nyakanga–Kanama, Ukuboza–Mutarama" },
+    fr: { planting: "Mars–Mai, Sep–Nov", harvest: "Juillet–Août, Déc–Jan" }
+  },
+  {
+    name: "Irish Potato",
+    en: { planting: "Feb–Mar, Aug–Sep", harvest: "May–June, Nov–Dec" },
+    rw: { planting: "Gashyantare–Werurwe, Kanama–Nzeri", harvest: "Gicurasi–Kamena, Ugushyingo–Ukuboza" },
+    fr: { planting: "Fév–Mar, Août–Sep", harvest: "Mai–Juin, Nov–Déc" }
+  },
+  {
+    name: "Beans",
+    en: { planting: "Mar–Apr, Sep–Oct", harvest: "Jun–Jul, Dec–Jan" },
+    rw: { planting: "Werurwe–Mata, Nzeri–Oktoba", harvest: "Kamena–Nyakanga, Ukuboza–Mutarama" },
+    fr: { planting: "Mars–Avr, Sep–Oct", harvest: "Juin–Juil, Déc–Jan" }
+  },
+  {
+    name: "Cassava",
+    en: { planting: "Mar–Apr, Sep–Oct", harvest: "12–18 months after planting" },
+    rw: { planting: "Werurwe–Mata, Nzeri–Oktoba", harvest: "amezi 12–18 nyuma yo guhinga" },
+    fr: { planting: "Mars–Avr, Sep–Oct", harvest: "12–18 mois après plantation" }
+  },
+  {
+    name: "Banana (Cooking)",
+    en: { planting: "All year", harvest: "12–18 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 12–18 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "12–18 mois après plantation" }
+  },
+  {
+    name: "Banana (Dessert)",
+    en: { planting: "All year", harvest: "12–18 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 12–18 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "12–18 mois après plantation" }
+  },
+  {
+    name: "Sweet Potato",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "4–5 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 4–5 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "4–5 mois après plantation" }
+  },
+  {
+    name: "Yams",
+    en: { planting: "Mar–Apr", harvest: "7–9 months after planting" },
+    rw: { planting: "Werurwe–Mata", harvest: "amezi 7–9 nyuma yo guhinga" },
+    fr: { planting: "Mars–Avr", harvest: "7–9 mois après plantation" }
+  },
+  {
+    name: "Soybeans",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Groundnuts",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Tomatoes",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Onions",
+    en: { planting: "Oct–Nov, Mar–Apr", harvest: "3–4 months after planting" },
+    rw: { planting: "Oktoba–Ugushyingo, Werurwe–Mata", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Oct–Nov, Mar–Avr", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Garlic",
+    en: { planting: "Oct–Nov, Mar–Apr", harvest: "5–6 months after planting" },
+    rw: { planting: "Oktoba–Ugushyingo, Werurwe–Mata", harvest: "amezi 5–6 nyuma yo guhinga" },
+    fr: { planting: "Oct–Nov, Mar–Avr", harvest: "5–6 mois après plantation" }
+  },
+  {
+    name: "Cabbage",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Carrots",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Peppers",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Eggplant",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Spinach",
+    en: { planting: "All year", harvest: "1–2 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 1–2 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "1–2 mois après plantation" }
+  },
+  {
+    name: "Amaranth",
+    en: { planting: "All year", harvest: "1–2 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 1–2 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "1–2 mois après plantation" }
+  },
+  {
+    name: "Pumpkin",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Watermelon",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Pineapple",
+    en: { planting: "All year", harvest: "18–24 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 18–24 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "18–24 mois après plantation" }
+  },
+  {
+    name: "Papaya",
+    en: { planting: "All year", harvest: "8–12 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 8–12 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "8–12 mois après plantation" }
+  },
+  {
+    name: "Passion Fruit",
+    en: { planting: "All year", harvest: "6–12 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 6–12 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "6–12 mois après plantation" }
+  },
+  {
+    name: "Avocado",
+    en: { planting: "All year", harvest: "3–4 years after planting" },
+    rw: { planting: "Umwaka wose", harvest: "imyaka 3–4 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "3–4 ans après plantation" }
+  }
 ];
+// Remaining crops 31–100
+seasons.push(
+  {
+    name: "Mango",
+    en: { planting: "All year", harvest: "3–5 years after planting" },
+    rw: { planting: "Umwaka wose", harvest: "imyaka 3–5 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "3–5 ans après plantation" }
+  },
+  {
+    name: "Apple",
+    en: { planting: "Feb–Mar", harvest: "Jun–Jul" },
+    rw: { planting: "Gashyantare–Werurwe", harvest: "Kamena–Nyakanga" },
+    fr: { planting: "Fév–Mar", harvest: "Juin–Juil" }
+  },
+  {
+    name: "Pear",
+    en: { planting: "Feb–Mar", harvest: "Jul–Aug" },
+    rw: { planting: "Gashyantare–Werurwe", harvest: "Nyakanga–Kanama" },
+    fr: { planting: "Fév–Mar", harvest: "Juil–Août" }
+  },
+  {
+    name: "Plum",
+    en: { planting: "Feb–Mar", harvest: "Jun–Jul" },
+    rw: { planting: "Gashyantare–Werurwe", harvest: "Kamena–Nyakanga" },
+    fr: { planting: "Fév–Mar", harvest: "Juin–Juil" }
+  },
+  {
+    name: "Grapes",
+    en: { planting: "All year", harvest: "2–3 years after planting" },
+    rw: { planting: "Umwaka wose", harvest: "imyaka 2–3 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "2–3 ans après plantation" }
+  },
+  {
+    name: "Strawberry",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Raspberry",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Blueberry",
+    en: { planting: "Sep–Nov", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Lettuce",
+    en: { planting: "All year", harvest: "1–2 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 1–2 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "1–2 mois après plantation" }
+  },
+  {
+    name: "Kale",
+    en: { planting: "All year", harvest: "2–3 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Broccoli",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Cauliflower",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Okra",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Cucumber",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Zucchini",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Radish",
+    en: { planting: "All year", harvest: "1–2 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 1–2 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "1–2 mois après plantation" }
+  },
+  {
+    name: "Beetroot",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Chili",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Vanilla",
+    en: { planting: "All year", harvest: "3–4 years after planting" },
+    rw: { planting: "Umwaka wose", harvest: "imyaka 3–4 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "3–4 ans après plantation" }
+  },
+  {
+    name: "Coffee",
+    en: { planting: "All year", harvest: "3–4 years after planting" },
+    rw: { planting: "Umwaka wose", harvest: "imyaka 3–4 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "3–4 ans après plantation" }
+  },
+  {
+    name: "Tea",
+    en: { planting: "All year", harvest: "3–4 years after planting" },
+    rw: { planting: "Umwaka wose", harvest: "imyaka 3–4 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "3–4 ans après plantation" }
+  },
+  {
+    name: "Sugarcane",
+    en: { planting: "All year", harvest: "12–18 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 12–18 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "12–18 mois après plantation" }
+  }
+);
 
-const grid = document.getElementById('seasonsGrid');
-seasons.forEach(season => {
-  const row = document.createElement('tr');
-  row.innerHTML = `
-    <td>${season.crop}</td>
-    <td>${season.planting}</td>
-    <td>${season.harvest}</td>
-  `;
-  grid.appendChild(row);
-});
-
-// Language switcher
-function setLanguage(lang) {
-  document.querySelectorAll('[data-key]').forEach(el => {
-    const key = el.getAttribute('data-key');
-    if(translations[lang] && translations[lang][key]) {
-      el.textContent = translations[lang][key];
-    }
-  });
-  document.documentElement.lang = lang;
-}
-</script>
-
-<style>
-  body { font-family: Arial, sans-serif; color: #2c3e50; background: #f8f9fa; line-height: 1.6; margin: 0; padding: 0; }
-  .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-  h1 { text-align: center; margin-bottom: 2rem; color: #27ae60; }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
-  th, td { padding: 0.75rem; text-align: left; border: 1px solid #ddd; }
-  th { background: #27ae60; color: white; }
-  tr:nth-child(even) { background: #f2f2f2; }
-  .navbar { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-  .logo { font-size: 1.8rem; font-weight: bold; }
-  .nav-links { list-style: none; display: flex; gap: 1.5rem; }
-  .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
-  .nav-links a:hover { opacity: 0.8; }
-  .language-selector { display: flex; gap: 0.5rem; }
-  .language-selector button { background: none; border: 1px solid white; color: white; padding: 0.3rem 0.7rem; border-radius: 5px; cursor: pointer; transition: all 0.3s; }
-  .language-selector button:hover { background: white; color: #27ae60; }
-  .login-btn { background: white; color: #27ae60; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
-  .login-btn:hover { background: #f8f9fa; transform: translateY(-2px); }
-</style>
-
-</body>
-</html>
+// I’ll finish the last remaining 40 crops (from Tobacco to Durian) next.
+seasons.push(
+  {
+    name: "Tobacco",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Wheat",
+    en: { planting: "Feb–Mar", harvest: "Jun–Jul" },
+    rw: { planting: "Gashyantare–Werurwe", harvest: "Kamena–Nyakanga" },
+    fr: { planting: "Fév–Mar", harvest: "Juin–Juil" }
+  },
+  {
+    name: "Barley",
+    en: { planting: "Feb–Mar", harvest: "Jun–Jul" },
+    rw: { planting: "Gashyantare–Werurwe", harvest: "Kamena–Nyakanga" },
+    fr: { planting: "Fév–Mar", harvest: "Juin–Juil" }
+  },
+  {
+    name: "Millet",
+    en: { planting: "Sep–Nov", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Sorghum",
+    en: { planting: "Sep–Nov", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Sunflower",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Sesame",
+    en: { planting: "Sep–Nov", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Peas",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "2–3 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Chickpeas",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Lentils",
+    en: { planting: "Sep–Nov, Mar–May", harvest: "3–4 months after planting" },
+    rw: { planting: "Nzeri–Ugushyingo, Werurwe–Gicurasi", harvest: "amezi 3–4 nyuma yo guhinga" },
+    fr: { planting: "Sep–Nov, Mar–Mai", harvest: "3–4 mois après plantation" }
+  },
+  {
+    name: "Mango (Alphonso)",
+    en: { planting: "All year", harvest: "3–5 years after planting" },
+    rw: { planting: "Umwaka wose", harvest: "imyaka 3–5 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "3–5 ans après plantation" }
+  },
+  {
+    name: "Ginger",
+    en: { planting: "All year", harvest: "8–10 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 8–10 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "8–10 mois après plantation" }
+  },
+  {
+    name: "Turmeric",
+    en: { planting: "All year", harvest: "8–10 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 8–10 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "8–10 mois après plantation" }
+  },
+  {
+    name: "Basil",
+    en: { planting: "All year", harvest: "2–3 months after planting" },
+    rw: { planting: "Umwaka wose", harvest: "amezi 2–3 nyuma yo guhinga" },
+    fr: { planting: "Toute l'année", harvest: "2–3 mois après plantation" }
+  },
+  {
+    name: "Mint",
+    en: { planting: "All year", harvest: "2–3 month
