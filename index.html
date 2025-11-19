@@ -1,137 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgriSmart Rwanda</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
-    body {background:#f8f9fa; color:#2c3e50; line-height:1.6;}
-    header {background:linear-gradient(135deg, #27ae60, #2ecc71); color:white; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center;}
-    header nav a {color:white; text-decoration:none; margin:0 1rem; font-weight:bold;}
-    header .lang-btn {background:none; border:1px solid white; color:white; padding:0.3rem 0.8rem; border-radius:5px; cursor:pointer; margin-left:0.5rem;}
-    header .lang-btn.active {background:white; color:#27ae60;}
-    header .social-icons i {margin-left:0.5rem; font-size:1rem;}
-    header .login-btn {background:white; color:#27ae60; border:none; padding:0.5rem 1.2rem; border-radius:5px; cursor:pointer; font-weight:bold; margin-left:1rem;}
-    .hero {background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1593541164459-72b892546e2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80'); background-size:cover; background-position:center; color:white; text-align:center; padding:6rem 2rem;}
-    .hero h1 {font-size:2.5rem; margin-bottom:1rem;}
-    .hero p {font-size:1.2rem; max-width:700px; margin:0 auto;}
-    section {padding:4rem 2rem; max-width:1200px; margin:0 auto;}
-    .section-title {text-align:center; font-size:2rem; color:#27ae60; margin-bottom:2rem;}
-    .grid {display:grid; gap:2rem; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
-    .card {background:white; padding:1.5rem; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); transition:transform 0.3s;}
-    .card:hover {transform:translateY(-5px);}
-    footer {background:#2c3e50; color:white; text-align:center; padding:2rem;}
-    footer a {color:white; text-decoration:none; margin:0 0.5rem;}
-    footer a:hover {color:#27ae60;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSmart Rwanda – Smart Farming Solutions</title>
+  <meta name="description" content="AgriSmart Rwanda provides smart farming solutions, crop databases, seasonal guides, and agricultural expertise for Rwandan farmers.">
+  <meta name="keywords" content="AgriSmart Rwanda, smart farming, Rwanda agriculture, crop database, farming seasons">
+  <meta name="author" content="AgriSmart Rwanda">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #2c3e50;
+      background: #f8f9fa;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      color: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .logo { font-size: 1.8rem; font-weight: bold; }
+    .nav-links { list-style: none; display: flex; gap: 1.5rem; }
+    .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; padding: 0.5rem 1rem; border-radius: 5px; }
+    .nav-links a:hover { background: rgba(255,255,255,0.2); }
+    .nav-links a.active { background: rgba(255,255,255,0.3); }
+    .language-selector { display: flex; gap: 0.5rem; }
+    .language-selector button {
+      background: none;
+      border: 1px solid white;
+      color: white;
+      padding: 0.3rem 0.7rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .language-selector button:hover { background: white; color: #27ae60; }
+    .login-btn {
+      background: white;
+      color: #27ae60;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    .login-btn:hover { background: #f8f9fa; transform: translateY(-2px); }
+    
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1593541164459-72b892546e2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 6rem 2rem;
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .hero p { font-size: 1.3rem; max-width: 700px; margin: 0 auto 2rem; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cta-btn {
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-btn:hover { background: #219653; transform: translateY(-2px); }
+    .cta-btn.secondary { background: transparent; border: 2px solid white; }
+    .cta-btn.secondary:hover { background: white; color: #27ae60; }
+    
+    .container { max-width: 1200px; margin: 4rem auto; padding: 0 1rem; }
+    .section-title { text-align: center; font-size: 2.5rem; color: #27ae60; margin-bottom: 3rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      text-align: center;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card-icon { font-size: 3rem; margin-bottom: 1rem; }
+    
+    footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+    }
+    .footer-links { margin: 1rem 0; }
+    .footer-links a { color: white; text-decoration: none; margin: 0 1rem; }
+    .footer-links a:hover { color: #27ae60; }
+    
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; gap: 1rem; }
+      .nav-links { flex-wrap: wrap; justify-content: center; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1.1rem; }
+    }
+  </style>
 </head>
 <body>
 
 <header>
-    <div>
-        <a href="index.html" style="font-weight:bold; font-size:1.5rem;">AgriSmart Rwanda</a>
-        <nav style="display:inline-block;">
-            <a href="index.html">Home</a>
-            <a href="crops.html">Crops</a>
-            <a href="seasons.html">Seasons</a>
-        </nav>
+  <nav class="navbar">
+    <div class="logo">AgriSmart Rwanda</div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="crops.html">Crops</a></li>
+      <li><a href="seasons.html">Seasons</a></li>
+      <li><a href="pests.html">Pests</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="language-selector">
+        <button>EN</button>
+        <button>RW</button>
+        <button>FR</button>
+      </div>
+      <button class="login-btn">Login</button>
     </div>
-    <div>
-        <div class="social-icons">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-whatsapp"></i>
-        </div>
-        <button class="login-btn">Login</button>
-        <button class="lang-btn active" data-lang="en">EN 🇬🇧</button>
-        <button class="lang-btn" data-lang="rw">RW 🇷🇼</button>
-        <button class="lang-btn" data-lang="fr">FR 🇫🇷</button>
-    </div>
+  </nav>
 </header>
 
 <section class="hero">
-    <h1 data-key="welcomeTitle"></h1>
-    <p data-key="welcomeText"></p>
+  <h1>Smart Farming Solutions for Rwanda</h1>
+  <p>Empowering Rwandan farmers with technology, knowledge, and market access for sustainable agriculture</p>
+  <div class="cta-buttons">
+    <a href="crops.html" class="cta-btn">Explore Crops Database</a>
+    <a href="seasons.html" class="cta-btn secondary">View Farming Seasons</a>
+  </div>
 </section>
 
-<section>
-    <h2 class="section-title" data-key="visionMissionTitle"></h2>
-    <div class="grid">
-        <div class="card">
-            <h3 data-key="visionTitle"></h3>
-            <p data-key="visionText"></p>
-        </div>
-        <div class="card">
-            <h3 data-key="missionTitle"></h3>
-            <p data-key="missionText"></p>
-        </div>
+<div class="container">
+  <h2 class="section-title">Why Choose AgriSmart?</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="card-icon">🌱</div>
+      <h3>Complete Crop Database</h3>
+      <p>Access detailed information about 100+ crops grown in Rwanda with optimal growing conditions and management practices.</p>
     </div>
-</section>
+    <div class="card">
+      <div class="card-icon">📅</div>
+      <h3>Seasonal Guidance</h3>
+      <p>Get precise planting and harvesting schedules based on Rwanda's unique climate patterns and seasonal variations.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🐛</div>
+      <h3>Pest Control Solutions</h3>
+      <p>Identify and manage common pests and diseases with organic and chemical control methods tailored for Rwandan conditions.</p>
+    </div>
+  </div>
+</div>
 
-<section>
-    <h2 class="section-title" data-key="whyChooseTitle"></h2>
-    <div class="grid">
-        <div class="card">
-            <p data-key="whyChoose1"></p>
-        </div>
-        <div class="card">
-            <p data-key="whyChoose2"></p>
-        </div>
-        <div class="card">
-            <p data-key="whyChoose3"></p>
-        </div>
+<div class="container">
+  <h2 class="section-title">Our Services</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="card-icon">📱</div>
+      <h3>Mobile Access</h3>
+      <p>Access all farming information directly from your smartphone, anytime, anywhere.</p>
     </div>
-</section>
-
-<section>
-    <h2 class="section-title" data-key="productsServicesTitle"></h2>
-    <div class="grid">
-        <div class="card">
-            <p data-key="productService1"></p>
-        </div>
-        <div class="card">
-            <p data-key="productService2"></p>
-        </div>
-        <div class="card">
-            <p data-key="productService3"></p>
-        </div>
+    <div class="card">
+      <div class="card-icon">🌦️</div>
+      <h3>Weather Alerts</h3>
+      <p>Receive real-time weather updates and farming recommendations for your specific location.</p>
     </div>
-</section>
+    <div class="card">
+      <div class="card-icon">💰</div>
+      <h3>Market Prices</h3>
+      <p>Get current market prices and connect directly with buyers for better profits.</p>
+    </div>
+  </div>
+</div>
 
 <footer>
-    <p>📞 0792584184 | 📧 agrismart316@gmail.com | 📅 2025</p>
-    <p>
-        🌐 <a href="#">Facebook: Amizero Ally Allan</a> | 
-        🌐 <a href="#">Instagram: amzero100</a> | 
-        🌐 <a href="#">WhatsApp: +250792584184</a>
-    </p>
-    <p>&copy; 2025 AgriSmart Rwanda. All rights reserved.</p>
+  <h3>AgriSmart Rwanda</h3>
+  <p>Transforming Agriculture Through Technology</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="crops.html">Crops</a>
+    <a href="seasons.html">Seasons</a>
+    <a href="pests.html">Pests</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <p>📞 0792584184 | 📧 agrismart316@gmail.com | 📅 2025</p>
+  <p>🌐 Facebook: Amizero Ally Allan | 🌐 Instagram: amzero100 | 🌐 WhatsApp: +250792584184</p>
+  <p>&copy; 2025 AgriSmart Rwanda. All rights reserved.</p>
 </footer>
-
-<script src="translations.js"></script>
-<script>
-    function setLanguage(lang){
-        document.querySelectorAll('[data-key]').forEach(el=>{
-            const key = el.getAttribute('data-key');
-            if(translations[key] && translations[key][lang]){
-                el.innerText = translations[key][lang];
-            }
-        });
-    }
-
-    document.querySelectorAll('.lang-btn').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-            const lang = btn.getAttribute('data-lang');
-            document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
-            btn.classList.add('active');
-            setLanguage(lang);
-        });
-    });
-
-    setLanguage('en'); // default
-</script>
 
 </body>
 </html>
